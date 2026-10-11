@@ -1,0 +1,1647 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Trắc nghiệm tiếng Trung bằng ký hiệu tay</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;700;900&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --paper: #f4eee1;
+        --paper-2: #ece3cf;
+        --card: #faf6ec;
+        --ink: #211d16;
+        --ink-soft: #4c463a;
+        --ink-faint: #8a8172;
+        --line: #d8cdb4;
+        --line-strong: #b8ab8c;
+        --vermillion: #a62b1f;
+        --vermillion-bright: #c0392b;
+        --gold: #8a6d3b;
+        --jade: #2e6b4f;
+        --jade-bg: #e2ecdf;
+        --bad-bg: #f6e0da;
+        --shadow: 0 10px 30px rgba(56, 44, 20, 0.14);
+        --radius: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --paper: #171410;
+          --paper-2: #1e1a14;
+          --card: #221d16;
+          --ink: #ece4d0;
+          --ink-soft: #c6bda6;
+          --ink-faint: #978b74;
+          --line: #3d362a;
+          --line-strong: #5a5040;
+          --vermillion: #d96a58;
+          --vermillion-bright: #e0785f;
+          --gold: #c2a05e;
+          --jade: #7fbf9d;
+          --jade-bg: #22392c;
+          --bad-bg: #472a24;
+          --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        font-family: "Be Vietnam Pro", system-ui, sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(1100px 500px at 85% -80px, rgba(138, 109, 59, 0.12), transparent 60%),
+          radial-gradient(900px 600px at -120px 30%, rgba(33, 29, 22, 0.07), transparent 55%),
+          linear-gradient(180deg, var(--paper), var(--paper-2));
+        min-height: 100vh;
+      }
+      .zh { font-family: "Noto Serif SC", "Noto Serif", serif; }
+      .wrap { max-width: 1180px; margin: 0 auto; padding: 0 18px 64px; position: relative; }
+      .bg-char {
+        position: fixed; right: -30px; top: 90px; z-index: 0; pointer-events: none;
+        font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 340px; line-height: 1;
+        color: var(--ink); opacity: 0.045; user-select: none;
+      }
+
+      /* ---------- Masthead ---------- */
+      .masthead {
+        position: relative; z-index: 1;
+        display: flex; align-items: center; gap: 16px;
+        padding: 26px 0 6px;
+      }
+      .seal {
+        flex: none; width: 58px; height: 58px; border-radius: 9px;
+        background: var(--vermillion); color: #fdf8ec;
+        display: grid; place-items: center;
+        font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 30px;
+        box-shadow: inset 0 0 0 2px rgba(253, 248, 236, 0.35), var(--shadow);
+        transform: rotate(-2deg);
+      }
+      .masthead h1 {
+        margin: 0; font-family: "Noto Serif", "Noto Serif SC", serif;
+        font-size: clamp(22px, 3.4vw, 32px); font-weight: 700; letter-spacing: 0.2px;
+      }
+      .masthead p { margin: 4px 0 0; color: var(--ink-soft); font-size: 14px; max-width: 640px; }
+      .brush { display: block; width: 100%; height: 14px; margin: 10px 0 4px; color: var(--ink); opacity: 0.55; }
+
+      /* ---------- Tabs ---------- */
+      .tabs {
+        position: relative; z-index: 1;
+        display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 22px;
+      }
+      .tab-btn {
+        appearance: none; border: 1px solid var(--line-strong); background: var(--card);
+        color: var(--ink-soft); border-radius: 999px; padding: 9px 18px;
+        font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
+      }
+      .tab-btn:hover { border-color: var(--ink-faint); color: var(--ink); }
+      .tab-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+      .tab-btn .badge {
+        display: inline-grid; place-items: center; min-width: 20px; height: 20px;
+        padding: 0 5px; margin-left: 7px; border-radius: 999px;
+        background: var(--vermillion); color: #fff; font-size: 12px; font-weight: 700;
+        vertical-align: 1px;
+      }
+      .tab-panel { display: none; position: relative; z-index: 1; }
+      .tab-panel.active { display: block; }
+
+      /* ---------- Generic ---------- */
+      .card {
+        background: var(--card); border: 1px solid var(--line);
+        border-radius: var(--radius); box-shadow: var(--shadow);
+      }
+      .btn {
+        appearance: none; border: 1px solid var(--line-strong); background: var(--card);
+        color: var(--ink); border-radius: 10px; padding: 10px 16px;
+        font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer;
+      }
+      .btn:hover:not(:disabled) { border-color: var(--ink-faint); }
+      .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+      .btn.primary { background: var(--vermillion); border-color: var(--vermillion); color: #fdf8ec; }
+      .btn.primary:hover:not(:disabled) { background: var(--vermillion-bright); border-color: var(--vermillion-bright); }
+      .btn.ink { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+      .btn.small { padding: 7px 12px; font-size: 13.5px; border-radius: 8px; }
+      .btn.danger { color: var(--vermillion); border-color: var(--vermillion); background: transparent; }
+      .seg { display: inline-flex; flex-wrap: wrap; gap: 6px; }
+      .seg button {
+        appearance: none; border: 1px solid var(--line-strong); background: transparent;
+        color: var(--ink-soft); padding: 7px 14px; border-radius: 999px;
+        font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+      }
+      .seg button.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+      .note { font-size: 13px; color: var(--ink-faint); line-height: 1.55; }
+      .hidden { display: none !important; }
+
+      /* ---------- Practice ---------- */
+      .toolbar {
+        display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-bottom: 16px;
+      }
+      .toolbar .group { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
+      .toolbar label { font-size: 13px; font-weight: 600; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.06em; }
+      .scoreboard { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+      .score-chip {
+        background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+        padding: 8px 16px; font-size: 14px; color: var(--ink-soft);
+      }
+      .score-chip b { color: var(--ink); font-size: 17px; margin-left: 4px; font-variant-numeric: tabular-nums; }
+      .score-chip.streak b { color: var(--vermillion); }
+      .practice-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(300px, 1fr); gap: 20px; align-items: start; }
+      @media (max-width: 900px) { .practice-grid { grid-template-columns: 1fr; } }
+
+      .q-card { padding: 26px 26px 22px; }
+      .q-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+      .kind-chip {
+        font-size: 12.5px; font-weight: 700; letter-spacing: 0.05em;
+        border: 1px solid var(--gold); color: var(--gold);
+        padding: 3px 10px; border-radius: 999px;
+      }
+      .mode-chip {
+        font-size: 12.5px; font-weight: 700; color: var(--vermillion);
+        border: 1px solid var(--vermillion); padding: 3px 10px; border-radius: 999px;
+      }
+      .q-count { margin-left: auto; font-size: 13px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+      .q-hanzi {
+        font-family: "Noto Serif SC", serif; font-weight: 900;
+        font-size: clamp(34px, 5.2vw, 52px); line-height: 1.25; margin: 18px 0 2px;
+        word-break: break-word;
+      }
+      .q-hanzi.long { font-size: clamp(25px, 3.8vw, 36px); }
+      .q-pinyin { font-family: "Noto Serif", serif; font-style: italic; font-size: 18px; color: var(--ink-soft); margin: 0 0 6px; }
+      .q-ask { font-size: 14.5px; color: var(--ink-faint); margin: 0 0 18px; }
+      .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      @media (max-width: 520px) { .options { grid-template-columns: 1fr; } }
+      .opt {
+        appearance: none; text-align: left; cursor: pointer; font: inherit;
+        display: flex; gap: 13px; align-items: flex-start;
+        background: var(--paper); border: 1.5px solid var(--line-strong);
+        border-radius: 12px; padding: 13px 15px; color: var(--ink);
+        transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      }
+      .opt:hover:not(:disabled) { border-color: var(--ink); }
+      .opt:disabled { cursor: default; }
+      .opt .g-emoji { font-size: 34px; line-height: 1.1; flex: none; }
+      .opt .g-body { min-width: 0; }
+      .opt .g-letter {
+        display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px;
+        background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; margin-right: 6px;
+        vertical-align: 2px;
+      }
+      .opt .g-name { font-size: 12.5px; font-weight: 600; color: var(--ink-faint); }
+      .opt .g-meaning { display: block; font-size: 16.5px; font-weight: 600; margin-top: 3px; line-height: 1.4; }
+      .opt.correct { border-color: var(--jade); background: var(--jade-bg); }
+      .opt.wrong { border-color: var(--vermillion); background: var(--bad-bg); }
+      .opt.detected { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(138, 109, 59, 0.35); }
+      .feedback { margin-top: 18px; border-top: 1px dashed var(--line-strong); padding-top: 15px; display: none; }
+      .feedback.show { display: block; }
+      .feedback .verdict { font-size: 17px; font-weight: 700; margin: 0 0 5px; }
+      .feedback .verdict.ok { color: var(--jade); }
+      .feedback .verdict.bad { color: var(--vermillion); }
+      .feedback p { margin: 4px 0; font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
+      .feedback .ex { font-family: "Noto Serif SC", serif; font-size: 16px; color: var(--ink); }
+      .q-actions { margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+      .empty-q { padding: 34px 8px; text-align: center; color: var(--ink-soft); }
+      .empty-q .zh { font-size: 40px; display: block; margin-bottom: 8px; color: var(--ink-faint); }
+
+      /* ---------- Camera ---------- */
+      .cam-card { padding: 18px; position: sticky; top: 14px; }
+      @media (max-width: 900px) { .cam-card { position: static; } }
+      .cam-card h3 { margin: 0 0 4px; font-family: "Noto Serif", serif; font-size: 18px; }
+      .cam-stage {
+        position: relative; border-radius: 10px; overflow: hidden;
+        background: #100e0b; aspect-ratio: 4 / 3; margin-top: 12px;
+        border: 1px solid var(--line-strong);
+      }
+      .cam-stage video {
+        position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+        transform: scaleX(-1);
+      }
+      .cam-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+      .cam-placeholder {
+        position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+        color: #cfc6ae; padding: 20px; font-size: 14px; line-height: 1.6;
+      }
+      .cam-placeholder .zh { font-size: 44px; display: block; color: #6d6350; margin-bottom: 6px; }
+      .cam-status { font-size: 13.5px; color: var(--ink-soft); margin: 10px 0 0; min-height: 20px; line-height: 1.5; }
+      .cam-status.err { color: var(--vermillion); }
+      .detect-box {
+        margin-top: 12px; border: 1px dashed var(--line-strong); border-radius: 10px; padding: 11px 14px;
+        display: flex; align-items: center; gap: 12px; min-height: 62px;
+      }
+      .detect-box .d-emoji { font-size: 32px; line-height: 1; }
+      .detect-box .d-name { font-weight: 700; font-size: 15px; }
+      .detect-box .d-sub { font-size: 12.5px; color: var(--ink-faint); }
+      .hold-track { height: 8px; border-radius: 999px; background: var(--paper-2); overflow: hidden; margin-top: 12px; border: 1px solid var(--line); }
+      .hold-fill { height: 100%; width: 0%; background: var(--vermillion); transition: width 0.05s linear; }
+      .hold-label { font-size: 12.5px; color: var(--ink-faint); margin-top: 5px; }
+      .cam-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 14px; }
+      .diag { margin-top: 14px; font-size: 13px; color: var(--ink-soft); }
+      .diag summary { cursor: pointer; font-weight: 600; color: var(--ink-soft); }
+      .diag table { border-collapse: collapse; margin-top: 8px; width: 100%; }
+      .diag td { padding: 4px 8px 4px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+      .diag td:first-child { color: var(--ink-faint); white-space: nowrap; }
+      .photo-preview { margin-top: 12px; display: none; }
+      .photo-preview.show { display: block; }
+      .photo-preview img { width: 100%; border-radius: 10px; border: 1px solid var(--line-strong); display: block; }
+
+      /* ---------- Vocab ---------- */
+      .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+      @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+      .panel { padding: 22px; }
+      .panel h3 { margin: 0 0 6px; font-family: "Noto Serif", serif; font-size: 19px; }
+      .panel h4 { margin: 20px 0 6px; font-size: 15px; }
+      .field { margin-top: 12px; }
+      .field label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
+      .field input[type="text"], .field select, .field textarea {
+        width: 100%; font: inherit; font-size: 14.5px; color: var(--ink);
+        background: var(--paper); border: 1px solid var(--line-strong); border-radius: 9px; padding: 9px 12px;
+      }
+      .field textarea { min-height: 110px; resize: vertical; line-height: 1.55; }
+      .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+      .import-result { margin-top: 12px; font-size: 14px; line-height: 1.6; display: none; }
+      .import-result.show { display: block; }
+      .import-result .ok-line { color: var(--jade); font-weight: 600; }
+      .import-result .err-line { color: var(--vermillion); }
+      .import-result ul { margin: 6px 0 0; padding-left: 20px; max-height: 170px; overflow: auto; }
+      .file-label {
+        display: inline-block; border: 1px solid var(--line-strong); background: var(--card);
+        border-radius: 10px; padding: 10px 16px; font-size: 14.5px; font-weight: 600; cursor: pointer;
+      }
+      .file-label:hover { border-color: var(--ink-faint); }
+      .vocab-list { display: flex; flex-direction: column; gap: 9px; margin-top: 14px; }
+      .v-item {
+        display: flex; gap: 13px; align-items: flex-start; padding: 12px 15px;
+        background: var(--card); border: 1px solid var(--line); border-radius: 11px;
+      }
+      .v-item .v-hanzi { font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 21px; line-height: 1.3; }
+      .v-item .v-body { flex: 1; min-width: 0; }
+      .v-item .v-pinyin { font-style: italic; font-family: "Noto Serif", serif; color: var(--ink-soft); font-size: 14px; }
+      .v-item .v-meaning { font-weight: 600; font-size: 15px; margin-top: 1px; }
+      .v-item .v-ex { font-size: 13.5px; color: var(--ink-faint); margin-top: 2px; }
+      .v-item .v-kind {
+        flex: none; font-size: 11.5px; font-weight: 700; color: var(--gold);
+        border: 1px solid var(--gold); border-radius: 999px; padding: 2px 9px; margin-top: 3px;
+      }
+      .v-item .v-src { flex: none; font-size: 11.5px; color: var(--ink-faint); margin-top: 5px; }
+      .v-item .v-del {
+        flex: none; appearance: none; border: none; background: transparent; cursor: pointer;
+        color: var(--vermillion); font: inherit; font-size: 13px; font-weight: 600; padding: 4px 2px;
+      }
+
+      /* ---------- Signs ---------- */
+      .signs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 13px; }
+      .sign-card { padding: 16px; display: flex; gap: 14px; align-items: flex-start; }
+      .sign-card .s-emoji { font-size: 40px; line-height: 1.05; flex: none; }
+      .sign-card .s-name { font-weight: 700; font-size: 15.5px; }
+      .sign-card .s-zh { font-family: "Noto Serif SC", serif; color: var(--ink-soft); font-size: 15px; }
+      .sign-card .s-hint { font-size: 13px; color: var(--ink-faint); line-height: 1.5; margin-top: 3px; }
+      .sign-card .s-hands {
+        display: inline-block; margin-top: 6px; font-size: 11.5px; font-weight: 700;
+        border: 1px solid var(--line-strong); border-radius: 999px; padding: 2px 9px; color: var(--ink-soft);
+      }
+
+      /* ---------- Review ---------- */
+      .review-item {
+        display: flex; gap: 13px; align-items: center; padding: 12px 15px;
+        background: var(--card); border: 1px solid var(--line); border-radius: 11px; margin-top: 9px;
+      }
+      .review-item .r-hanzi { font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 20px; }
+      .review-item .r-body { flex: 1; min-width: 0; }
+      .review-item .r-meaning { font-size: 14px; color: var(--ink-soft); }
+      .review-item .r-count {
+        flex: none; font-size: 13px; font-weight: 700; color: var(--vermillion);
+        border: 1px solid var(--vermillion); border-radius: 999px; padding: 3px 11px;
+      }
+      footer { position: relative; z-index: 1; margin-top: 40px; text-align: center; color: var(--ink-faint); font-size: 13px; }
+      footer .zh { font-size: 15px; }
+    </style>
+  </head>
+  <body>
+    <div class="bg-char zh" aria-hidden="true">墨</div>
+    <div class="wrap">
+      <header class="masthead">
+        <div class="seal zh" aria-hidden="true">学</div>
+        <div>
+          <h1>Trắc nghiệm tiếng Trung bằng ký hiệu tay</h1>
+          <p>Nhìn chữ Hán, chọn nghĩa đúng bằng cách giơ ký hiệu tay trước camera — hoặc chụp ảnh ký hiệu, hoặc chạm chọn khi cần.</p>
+        </div>
+      </header>
+      <svg class="brush" viewBox="0 0 1200 14" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M4 9 C 180 3, 340 12, 560 7 S 980 4, 1196 8" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" opacity="0.8" />
+        <path d="M4 11 C 240 7, 460 13, 700 9 S 1040 7, 1196 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.5" />
+      </svg>
+
+      <nav class="tabs" role="tablist" aria-label="Chế độ">
+        <button class="tab-btn active" data-tab="practice" role="tab">Luyện tập</button>
+        <button class="tab-btn" data-tab="vocab" role="tab">Kho từ<span class="badge" id="vocabBadge">38</span></button>
+        <button class="tab-btn" data-tab="signs" role="tab">Ký hiệu tay</button>
+        <button class="tab-btn" data-tab="review" role="tab">Ôn tập<span class="badge hidden" id="reviewBadge">0</span></button>
+      </nav>
+
+      <!-- ================= LUYỆN TẬP ================= -->
+      <section class="tab-panel active" id="panel-practice">
+        <div class="toolbar">
+          <div class="group">
+            <label for="kindSeg">Loại câu hỏi</label>
+            <div class="seg" id="kindSeg">
+              <button data-kind="all" class="active">Tất cả</button>
+              <button data-kind="word">Từ</button>
+              <button data-kind="phrase">Cụm từ</button>
+              <button data-kind="sentence">Câu</button>
+            </div>
+          </div>
+          <div class="group">
+            <label for="srcSeg">Nguồn từ</label>
+            <div class="seg" id="srcSeg">
+              <button data-src="all" class="active">Tất cả</button>
+              <button data-src="builtin">Kho mẫu</button>
+              <button data-src="user">Từ đã nhập</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="scoreboard">
+          <span class="score-chip">Điểm<b id="scoreVal">0</b></span>
+          <span class="score-chip">Đúng<b id="correctVal">0/0</b></span>
+          <span class="score-chip streak">Chuỗi đúng<b id="streakVal">0</b></span>
+          <span class="score-chip">Câu<b id="qNumVal">–</b></span>
+        </div>
+
+        <div class="practice-grid">
+          <div class="card q-card" id="qCard"><!-- filled by JS --></div>
+
+          <div class="card cam-card">
+            <h3>Camera nhận diện tay</h3>
+            <p class="note">Giơ ký hiệu của phương án bạn chọn và <b>giữ yên khoảng 0,5 giây</b> để chốt đáp án. Nhận diện chạy ngay trên máy của bạn.</p>
+            <div class="cam-stage">
+              <video id="camVideo" playsinline muted></video>
+              <canvas id="camCanvas" width="640" height="480"></canvas>
+              <div class="cam-placeholder" id="camPlaceholder">
+                <span><span class="zh">手</span>Camera đang tắt.<br />Bấm “Bật camera” để trả lời bằng ký hiệu tay.</span>
+              </div>
+            </div>
+            <p class="cam-status" id="camStatus">Camera chưa bật — bạn vẫn trả lời được bằng cách chạm vào phương án.</p>
+            <div class="detect-box">
+              <span class="d-emoji" id="detectEmoji">✋</span>
+              <div>
+                <div class="d-name" id="detectName">Chưa thấy ký hiệu nào</div>
+                <div class="d-sub" id="detectSub">Đưa tay vào khung hình, lòng bàn tay hướng về camera.</div>
+              </div>
+            </div>
+            <div class="hold-track"><div class="hold-fill" id="holdFill"></div></div>
+            <div class="hold-label" id="holdLabel">Giữ ký hiệu đúng 0,5 giây để chốt đáp án.</div>
+            <div class="cam-actions">
+              <button class="btn primary" id="btnCamStart">Bật camera</button>
+              <button class="btn hidden" id="btnCamStop">Tắt camera</button>
+              <label class="file-label" for="photoInput">Chụp ảnh ký hiệu tay</label>
+              <input type="file" id="photoInput" accept="image/*" capture="user" class="hidden" />
+              <button class="btn hidden" id="btnModelRetry">Thử nạp lại mô hình</button>
+            </div>
+            <div class="photo-preview" id="photoPreview">
+              <img id="photoImg" alt="Ảnh ký hiệu tay vừa chụp" />
+              <p class="cam-status" id="photoStatus"></p>
+            </div>
+            <details class="diag" id="diagBox">
+              <summary>Chẩn đoán camera</summary>
+              <table>
+                <tr><td>Giao thức trang</td><td id="diagProtocol">–</td></tr>
+                <tr><td>Ngữ cảnh an toàn</td><td id="diagSecure">–</td></tr>
+                <tr><td>Hiển thị</td><td id="diagFrame">–</td></tr>
+                <tr><td>API camera</td><td id="diagApi">–</td></tr>
+                <tr><td>Quyền camera</td><td id="diagPerm">–</td></tr>
+              </table>
+              <p class="note">Nếu camera trực tiếp bị chặn, hãy mở trang này ở một tab riêng qua địa chỉ https — hoặc dùng nút “Chụp ảnh ký hiệu tay” ở trên, vẫn nhận diện bằng cùng mô hình.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= KHO TỪ ================= -->
+      <section class="tab-panel" id="panel-vocab">
+        <div class="cols">
+          <div>
+            <div class="card panel">
+              <h3>Nhập kho từ bên ngoài</h3>
+              <p class="note">Từ đã nhập được dùng làm câu hỏi ngay trong phiên này. Vì bản này chạy độc lập trên trình duyệt, kho từ đã nhập <b>chỉ giữ trong lúc trang đang mở</b> — hãy dùng nút xuất file ở dưới để lưu lại và nhập lại lần sau.</p>
+
+              <h4>Dán danh sách</h4>
+              <div class="field">
+                <label for="pasteInput">Mỗi dòng một mục: Hán tự | pinyin | nghĩa | câu ví dụ | loại (tu / cum / cau)</label>
+                <textarea id="pasteInput" placeholder="你好 | nǐ hǎo | Xin chào | 你好，我是小雨。 | tu&#10;谢谢, xièxie, Cảm ơn"></textarea>
+              </div>
+              <div class="cam-actions">
+                <button class="btn ink" id="btnParsePaste">Xem trước</button>
+              </div>
+
+              <h4>Chọn file CSV hoặc JSON</h4>
+              <p class="note">CSV: các cột hanzi, pinyin, meaning, example, kind (có hoặc không có dòng tiêu đề; ngăn cách bằng dấu phẩy, chấm phẩy hoặc tab). JSON: mảng các đối tượng có các khóa trên.</p>
+              <div class="cam-actions">
+                <label class="file-label" for="csvInput">Chọn file CSV</label>
+                <input type="file" id="csvInput" accept=".csv,text/csv,text/plain" class="hidden" />
+                <label class="file-label" for="jsonInput">Chọn file JSON</label>
+                <input type="file" id="jsonInput" accept=".json,application/json" class="hidden" />
+              </div>
+
+              <div class="import-result" id="importResult"></div>
+              <div class="cam-actions hidden" id="importActions">
+                <button class="btn primary" id="btnApplyImport">Thêm vào kho từ</button>
+                <button class="btn" id="btnCancelImport">Hủy</button>
+              </div>
+
+              <h4>Xuất kho từ đã nhập</h4>
+              <p class="note">Tải kho từ của bạn xuống máy để lưu trữ hoặc nhập lại ở lần mở sau.</p>
+              <div class="cam-actions">
+                <button class="btn" id="btnExportJson">Xuất JSON</button>
+                <button class="btn" id="btnExportCsv">Xuất CSV</button>
+              </div>
+            </div>
+
+            <div class="card panel" style="margin-top:20px">
+              <h3>Thêm một mục thủ công</h3>
+              <div class="field-row">
+                <div class="field">
+                  <label for="fHanzi">Hán tự *</label>
+                  <input type="text" id="fHanzi" placeholder="学习" />
+                </div>
+                <div class="field">
+                  <label for="fPinyin">Pinyin</label>
+                  <input type="text" id="fPinyin" placeholder="xuéxí" />
+                </div>
+              </div>
+              <div class="field">
+                <label for="fMeaning">Nghĩa tiếng Việt *</label>
+                <input type="text" id="fMeaning" placeholder="Học tập" />
+              </div>
+              <div class="field-row">
+                <div class="field">
+                  <label for="fExample">Câu ví dụ</label>
+                  <input type="text" id="fExample" placeholder="我喜欢学习中文。" />
+                </div>
+                <div class="field">
+                  <label for="fKind">Loại</label>
+                  <select id="fKind">
+                    <option value="word">Từ</option>
+                    <option value="phrase">Cụm từ</option>
+                    <option value="sentence">Câu</option>
+                  </select>
+                </div>
+              </div>
+              <p class="cam-status err hidden" id="manualMsg"></p>
+              <div class="cam-actions">
+                <button class="btn primary" id="btnAddManual">Thêm vào kho</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <h3>Danh sách kho từ</h3>
+            <p class="note" id="vocabSummary">–</p>
+            <div class="field">
+              <input type="text" id="vocabSearch" placeholder="Tìm theo Hán tự, pinyin hoặc nghĩa…" />
+            </div>
+            <div class="vocab-list" id="vocabList"></div>
+            <div class="cam-actions" style="margin-top:18px">
+              <button class="btn danger" id="btnClearUser">Xóa toàn bộ từ đã nhập</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= KÝ HIỆU TAY ================= -->
+      <section class="tab-panel" id="panel-signs">
+        <p class="note" style="margin-bottom:16px; max-width:720px">Thư viện 24 ký hiệu tay. Mỗi câu hỏi gắn ngẫu nhiên 4 ký hiệu cho 4 phương án — bạn chỉ cần làm đúng ký hiệu của phương án mình chọn. Ký hiệu hai tay cần đưa cả hai tay vào khung hình.</p>
+        <div class="signs-grid" id="signsGrid"></div>
+      </section>
+
+      <!-- ================= ÔN TẬP ================= -->
+      <section class="tab-panel" id="panel-review">
+        <div class="card panel">
+          <h3>Ôn lại các mục đã trả lời sai</h3>
+          <p class="note" id="reviewSummary">Mọi lượt trả lời trong phiên này được ghi lại ở đây. Các mục từng sai sẽ nằm trong danh sách để bạn luyện lại cho thuộc.</p>
+          <div class="cam-actions">
+            <button class="btn primary" id="btnPracticeWrong" disabled>Luyện lại các mục đã sai</button>
+            <button class="btn" id="btnResetStats">Xóa lịch sử phiên này</button>
+          </div>
+          <div id="reviewList"></div>
+        </div>
+      </section>
+
+      <footer>
+        <span class="zh">学中文，用手回答。</span><br />
+        Học tiếng Trung, trả lời bằng tay.
+      </footer>
+    </div>
+
+    <script>
+      "use strict";
+      /* =========================================================
+         1) THƯ VIỆN 24 KÝ HIỆU TAY + BỘ PHÂN LOẠI HÌNH HỌC
+         trên 21 điểm mốc bàn tay (MediaPipe). Mỗi ký hiệu được
+         chấm điểm 0..1 theo hình dạng ngón; >= 0.72 coi như khớp.
+         ========================================================= */
+      var GESTURES = [
+        { id: "fist", emoji: "✊", nameVi: "Nắm đấm", nameZh: "拳头", hands: 1, hint: "Nắm chặt cả 5 ngón" },
+        { id: "one", emoji: "☝️", nameVi: "Số 1 — trỏ lên", nameZh: "一", hands: 1, hint: "Giơ ngón trỏ, gập các ngón còn lại" },
+        { id: "two", emoji: "✌️", nameVi: "Số 2 — chữ V", nameZh: "二", hands: 1, hint: "Giơ trỏ + giữa hình chữ V" },
+        { id: "three", emoji: "3️⃣", nameVi: "Số 3", nameZh: "三", hands: 1, hint: "Giơ trỏ + giữa + áp út (phong cách Trung Quốc)" },
+        { id: "four", emoji: "🖖", nameVi: "Số 4", nameZh: "四", hands: 1, hint: "Giơ 4 ngón, gập ngón cái" },
+        { id: "five", emoji: "✋", nameVi: "Số 5 — bàn tay mở", nameZh: "五", hands: 1, hint: "Xòe cả 5 ngón, lòng bàn tay hướng camera" },
+        { id: "thumbs-up", emoji: "👍", nameVi: "Ngón cái lên", nameZh: "点赞", hands: 1, hint: "Nắm đấm, ngón cái hướng lên" },
+        { id: "thumbs-down", emoji: "👎", nameVi: "Ngón cái xuống", nameZh: "差评", hands: 1, hint: "Nắm đấm, ngón cái hướng xuống" },
+        { id: "ok", emoji: "👌", nameVi: "OK", nameZh: "好的", hands: 1, hint: "Đầu ngón cái chạm đầu ngón trỏ thành vòng tròn" },
+        { id: "pinch", emoji: "🤏", nameVi: "Chút xíu", nameZh: "一点点", hands: 1, hint: "Ngón cái và ngón trỏ gần chạm nhau, các ngón khác xòe" },
+        { id: "point-left", emoji: "👈", nameVi: "Trỏ trái", nameZh: "向左指", hands: 1, hint: "Duỗi ngón trỏ sang trái" },
+        { id: "point-right", emoji: "👉", nameVi: "Trỏ phải", nameZh: "向右指", hands: 1, hint: "Duỗi ngón trỏ sang phải" },
+        { id: "point-down", emoji: "👇", nameVi: "Trỏ xuống", nameZh: "向下指", hands: 1, hint: "Duỗi ngón trỏ xuống dưới" },
+        { id: "rock", emoji: "🤘", nameVi: "Rock", nameZh: "摇滚", hands: 1, hint: "Giơ trỏ + út, gập giữa và áp út" },
+        { id: "love", emoji: "🤟", nameVi: "Yêu (ILY)", nameZh: "我爱你", hands: 1, hint: "Giơ cái + trỏ + út" },
+        { id: "call", emoji: "🤙", nameVi: "Gọi điện", nameZh: "打电话", hands: 1, hint: "Giơ ngón cái + ngón út như ống nghe" },
+        { id: "raised-back", emoji: "🤚", nameVi: "Giơ lưng tay", nameZh: "举手", hands: 1, hint: "Xòe 5 ngón, mu bàn tay hướng camera" },
+        { id: "middle", emoji: "🖕", nameVi: "Ngón giữa", nameZh: "中指", hands: 1, hint: "Chỉ giơ ngón giữa (đùa vui khi luyện tập)" },
+        { id: "finger-heart", emoji: "🫰", nameVi: "Tim mini", nameZh: "比心", hands: 1, hint: "Bắt chéo ngón cái và ngón trỏ" },
+        { id: "pray", emoji: "🙏", nameVi: "Chắp tay", nameZh: "合十", hands: 2, hint: "Chắp hai lòng bàn tay vào nhau" },
+        { id: "clap", emoji: "👏", nameVi: "Vỗ tay", nameZh: "鼓掌", hands: 2, hint: "Hai bàn tay mở, úp gần nhau" },
+        { id: "big-heart", emoji: "🫶", nameVi: "Tim lớn hai tay", nameZh: "大爱心", hands: 2, hint: "Hai tay cong thành hình trái tim lớn" },
+        { id: "double-v", emoji: "✌️", nameVi: "Hai chữ V", nameZh: "双胜利", hands: 2, hint: "Cả hai tay cùng làm chữ V" },
+        { id: "frame", emoji: "🖼️", nameVi: "Khung hình", nameZh: "相框", hands: 2, hint: "Hai tay tạo khung chữ nhật (cái + trỏ mỗi tay)" }
+      ];
+      var MATCH_THRESHOLD = 0.72;
+      function gestureById(id) {
+        for (var i = 0; i < GESTURES.length; i++) if (GESTURES[i].id === id) return GESTURES[i];
+        return GESTURES[5];
+      }
+      function pdist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y, (a.z || 0) - (b.z || 0)); }
+      function avgOf(v) { var s = 0; for (var i = 0; i < v.length; i++) s += v[i]; return s / Math.max(v.length, 1); }
+      function fingerExtension(hand) {
+        var wrist = hand[0];
+        function finger(tip, pip) {
+          var dTip = pdist(hand[tip], wrist), dPip = pdist(hand[pip], wrist);
+          return Math.max(0, Math.min(1, (dTip / Math.max(dPip, 1e-6) - 0.85) / 0.55));
+        }
+        var thumbSpan = pdist(hand[4], hand[17]) / Math.max(pdist(hand[2], hand[17]), 1e-6);
+        return {
+          thumb: Math.max(0, Math.min(1, (thumbSpan - 0.9) / 0.7)),
+          index: finger(8, 6), middle: finger(12, 10), ring: finger(16, 14), pinky: finger(20, 18)
+        };
+      }
+      function scoreOneHand(id, hand) {
+        var f = fingerExtension(hand);
+        var wrist = hand[0], thumbTip = hand[4], indexTip = hand[8];
+        var handSize = Math.max(pdist(hand[0], hand[9]), 1e-6);
+        var E = function (v) { return v; }, B = function (v) { return 1 - v; };
+        switch (id) {
+          case "fist": return avgOf([B(f.index), B(f.middle), B(f.ring), B(f.pinky), B(f.thumb)]);
+          case "one": {
+            var up = Math.max(0, Math.min(1, (wrist.y - indexTip.y) / handSize));
+            return avgOf([E(f.index), B(f.middle), B(f.ring), B(f.pinky), up]);
+          }
+          case "two": return avgOf([E(f.index), E(f.middle), B(f.ring), B(f.pinky)]);
+          case "three": return avgOf([E(f.index), E(f.middle), E(f.ring), B(f.pinky)]);
+          case "four": return avgOf([E(f.index), E(f.middle), E(f.ring), E(f.pinky), B(f.thumb)]);
+          case "five": return avgOf([E(f.index), E(f.middle), E(f.ring), E(f.pinky), E(f.thumb)]);
+          case "thumbs-up": {
+            var u2 = Math.max(0, Math.min(1, (wrist.y - thumbTip.y) / (handSize * 0.8)));
+            return avgOf([B(f.index), B(f.middle), B(f.ring), B(f.pinky), E(f.thumb), u2]);
+          }
+          case "thumbs-down": {
+            var dn = Math.max(0, Math.min(1, (thumbTip.y - wrist.y) / (handSize * 0.8)));
+            return avgOf([B(f.index), B(f.middle), B(f.ring), B(f.pinky), E(f.thumb), dn]);
+          }
+          case "ok": {
+            var touch = 1 - Math.min(1, pdist(thumbTip, indexTip) / (handSize * 0.55));
+            return avgOf([touch, E(f.middle), E(f.ring), E(f.pinky)]);
+          }
+          case "pinch": {
+            var gap = pdist(thumbTip, indexTip) / handSize;
+            var near = gap > 0.08 && gap < 0.55 ? 1 : Math.max(0, 1 - Math.abs(gap - 0.3));
+            return avgOf([near, E(f.middle), E(f.ring), B(f.index) * 0.4 + 0.3]);
+          }
+          case "point-left": {
+            var dl = Math.max(0, Math.min(1, (wrist.x - indexTip.x) / handSize));
+            return avgOf([E(f.index), B(f.middle), B(f.ring), B(f.pinky), dl]);
+          }
+          case "point-right": {
+            var dr = Math.max(0, Math.min(1, (indexTip.x - wrist.x) / handSize));
+            return avgOf([E(f.index), B(f.middle), B(f.ring), B(f.pinky), dr]);
+          }
+          case "point-down": {
+            var dd = Math.max(0, Math.min(1, (indexTip.y - wrist.y) / handSize));
+            return avgOf([E(f.index), B(f.middle), B(f.ring), B(f.pinky), dd]);
+          }
+          case "rock": return avgOf([E(f.index), B(f.middle), B(f.ring), E(f.pinky)]);
+          case "love": return avgOf([E(f.thumb), E(f.index), B(f.middle), B(f.ring), E(f.pinky)]);
+          case "call": return avgOf([E(f.thumb), B(f.index), B(f.middle), B(f.ring), E(f.pinky)]);
+          case "raised-back": return avgOf([E(f.index), E(f.middle), E(f.ring), E(f.pinky), E(f.thumb)]) * 0.92;
+          case "middle": return avgOf([B(f.index), E(f.middle), B(f.ring), B(f.pinky)]);
+          case "finger-heart": {
+            var cross = 1 - Math.min(1, pdist(thumbTip, indexTip) / (handSize * 0.4));
+            return avgOf([cross, B(f.middle), B(f.ring), B(f.pinky)]);
+          }
+          default: return 0;
+        }
+      }
+      function scoreGesture(def, hands) {
+        if (def.hands === 1) {
+          if (!hands.length) return 0;
+          var best = 0;
+          for (var i = 0; i < hands.length; i++) best = Math.max(best, scoreOneHand(def.id, hands[i]));
+          return best;
+        }
+        if (hands.length < 2) return 0;
+        var a = hands[0], b = hands[1];
+        var sizeA = Math.max(pdist(a[0], a[9]), 1e-6);
+        var wristGap = pdist(a[0], b[0]) / sizeA;
+        var close = Math.max(0, 1 - Math.max(0, wristGap - 1.2) / 2.2);
+        switch (def.id) {
+          case "pray": return avgOf([close, scoreOneHand("five", a), scoreOneHand("five", b)]);
+          case "clap": return avgOf([scoreOneHand("five", a), scoreOneHand("five", b), Math.max(0, 1 - Math.abs(wristGap - 1.8) / 2)]);
+          case "big-heart": {
+            var tips = Math.max(0, 1 - pdist(a[8], b[8]) / (sizeA * 1.6));
+            var thumbs = Math.max(0, 1 - pdist(a[4], b[4]) / (sizeA * 1.6));
+            return avgOf([tips, thumbs]);
+          }
+          case "double-v": return avgOf([scoreOneHand("two", a), scoreOneHand("two", b)]);
+          case "frame": return avgOf([scoreOneHand("one", a) * 0.6 + 0.4, scoreOneHand("one", b) * 0.6 + 0.4, Math.max(0, 1 - Math.abs(wristGap - 2.6) / 2.4)]);
+          default: return 0;
+        }
+      }
+      /* Lật ngang điểm mốc để khớp với hình soi gương người học nhìn thấy. */
+      function mirrorHands(hands) {
+        return hands.map(function (h) {
+          return h.map(function (p) { return { x: 1 - p.x, y: p.y, z: p.z || 0 }; });
+        });
+      }
+
+      /* =========================================================
+         2) KHO TỪ MẪU (38 mục: HSK 1–2 + câu của Tiểu Vũ đã dạy)
+         ========================================================= */
+      var BUILTIN_VOCAB = [
+        { hanzi: "你好", pinyin: "nǐ hǎo", meaning: "Xin chào", example: "你好，我是小雨。", kind: "word" },
+        { hanzi: "谢谢", pinyin: "xièxie", meaning: "Cảm ơn", example: "谢谢你的帮助。", kind: "word" },
+        { hanzi: "朋友", pinyin: "péngyou", meaning: "Bạn bè", example: "他是我的好朋友。", kind: "word" },
+        { hanzi: "老师", pinyin: "lǎoshī", meaning: "Giáo viên", example: "王老师教中文。", kind: "word" },
+        { hanzi: "学生", pinyin: "xuésheng", meaning: "Học sinh / sinh viên", example: "我是学生。", kind: "word" },
+        { hanzi: "家", pinyin: "jiā", meaning: "Nhà / gia đình", example: "我家有四口人。", kind: "word" },
+        { hanzi: "水", pinyin: "shuǐ", meaning: "Nước", example: "我想喝水。", kind: "word" },
+        { hanzi: "茶", pinyin: "chá", meaning: "Trà", example: "中国人喜欢喝茶。", kind: "word" },
+        { hanzi: "米饭", pinyin: "mǐfàn", meaning: "Cơm", example: "我吃米饭。", kind: "word" },
+        { hanzi: "猫", pinyin: "māo", meaning: "Con mèo", example: "这只猫很可爱。", kind: "word" },
+        { hanzi: "狗", pinyin: "gǒu", meaning: "Con chó", example: "他有一只小狗。", kind: "word" },
+        { hanzi: "书", pinyin: "shū", meaning: "Sách", example: "我在看书。", kind: "word" },
+        { hanzi: "电影", pinyin: "diànyǐng", meaning: "Phim", example: "我们去看电影吧。", kind: "word" },
+        { hanzi: "天气", pinyin: "tiānqì", meaning: "Thời tiết", example: "今天天气很好。", kind: "word" },
+        { hanzi: "今天", pinyin: "jīntiān", meaning: "Hôm nay", example: "今天是星期一。", kind: "word" },
+        { hanzi: "明天", pinyin: "míngtiān", meaning: "Ngày mai", example: "明天见！", kind: "word" },
+        { hanzi: "钱", pinyin: "qián", meaning: "Tiền", example: "这个多少钱？", kind: "word" },
+        { hanzi: "工作", pinyin: "gōngzuò", meaning: "Công việc / làm việc", example: "他在银行工作。", kind: "word" },
+        { hanzi: "爱", pinyin: "ài", meaning: "Yêu / thích", example: "我爱我的家人。", kind: "word" },
+        { hanzi: "想", pinyin: "xiǎng", meaning: "Nhớ / muốn / nghĩ", example: "我想你。", kind: "word" },
+        { hanzi: "早上好", pinyin: "zǎoshang hǎo", meaning: "Chào buổi sáng", example: "早上好，亲爱的！", kind: "phrase" },
+        { hanzi: "晚安", pinyin: "wǎn'ān", meaning: "Chúc ngủ ngon", example: "晚安，做个好梦。", kind: "phrase" },
+        { hanzi: "没关系", pinyin: "méi guānxi", meaning: "Không sao đâu", example: "没关系，我不介意。", kind: "phrase" },
+        { hanzi: "对不起", pinyin: "duìbuqǐ", meaning: "Xin lỗi", example: "对不起，我迟到了。", kind: "phrase" },
+        { hanzi: "没问题", pinyin: "méi wèntí", meaning: "Không vấn đề gì", example: "交给我，没问题。", kind: "phrase" },
+        { hanzi: "加油", pinyin: "jiāyóu", meaning: "Cố lên!", example: "今天也要加油哦！", kind: "phrase" },
+        { hanzi: "慢慢来", pinyin: "mànman lái", meaning: "Cứ từ từ thôi", example: "别着急，慢慢来。", kind: "phrase" },
+        { hanzi: "小心一点", pinyin: "xiǎoxīn yìdiǎn", meaning: "Cẩn thận một chút", example: "路上小心一点。", kind: "phrase" },
+        { hanzi: "我回来了", pinyin: "wǒ huílái le", meaning: "Tôi về rồi đây", example: "妈，我回来了！", kind: "phrase" },
+        { hanzi: "好久不见", pinyin: "hǎojiǔ bú jiàn", meaning: "Lâu rồi không gặp", example: "好久不见，你好吗？", kind: "phrase" },
+        { hanzi: "你吃早餐了吗？", pinyin: "Nǐ chī zǎocān le ma?", meaning: "Bạn ăn sáng chưa?", example: "", kind: "sentence" },
+        { hanzi: "我想你了。", pinyin: "Wǒ xiǎng nǐ le.", meaning: "Tôi nhớ bạn rồi.", example: "", kind: "sentence" },
+        { hanzi: "今天股市怎么样？", pinyin: "Jīntiān gǔshì zěnmeyàng?", meaning: "Hôm nay thị trường chứng khoán thế nào?", example: "", kind: "sentence" },
+        { hanzi: "我听不懂，所以来问你。", pinyin: "Wǒ tīng bù dǒng, suǒyǐ lái wèn nǐ.", meaning: "Tôi nghe không hiểu, nên đến hỏi bạn.", example: "", kind: "sentence" },
+        { hanzi: "你这么努力，真的很帅。", pinyin: "Nǐ zhème nǔlì, zhēn de hěn shuài.", meaning: "Bạn cố gắng như vậy, thật sự rất ngầu.", example: "", kind: "sentence" },
+        { hanzi: "我刚刚听到一首歌。", pinyin: "Wǒ gānggāng tīng dào yì shǒu gē.", meaning: "Tôi vừa nghe được một bài hát.", example: "", kind: "sentence" },
+        { hanzi: "我们明天一起去喝茶，好吗？", pinyin: "Wǒmen míngtiān yìqǐ qù hē chá, hǎo ma?", meaning: "Ngày mai chúng ta cùng đi uống trà nhé, được không?", example: "", kind: "sentence" },
+        { hanzi: "学习中文很有意思。", pinyin: "Xuéxí Zhōngwén hěn yǒu yìsi.", meaning: "Học tiếng Trung rất thú vị.", example: "", kind: "sentence" }
+      ];
+      var KIND_LABEL = { word: "Từ", phrase: "Cụm từ", sentence: "Câu" };
+
+      /* =========================================================
+         3) TRẠNG THÁI PHIÊN (chỉ trong bộ nhớ trang — tải lại
+         trang là làm mới; xuất file để lưu kho từ của bạn)
+         ========================================================= */
+      var userVocab = [];
+      var stats = {}; // key -> {entry, attempts, wrong}
+      var ui = { kind: "all", src: "all", reviewMode: false, reviewQueue: [] };
+      var session = { score: 0, asked: 0, correct: 0, streak: 0, qIndex: 0 };
+      var current = null; // {entry, options:[{entry, gesture}], correctIdx, answered}
+
+      function $(id) { return document.getElementById(id); }
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+      function entryKey(e) { return e.hanzi + "||" + e.meaning; }
+      function allVocab() {
+        var out = [];
+        BUILTIN_VOCAB.forEach(function (e) { out.push({ e: e, src: "builtin" }); });
+        userVocab.forEach(function (e) { out.push({ e: e, src: "user" }); });
+        return out;
+      }
+      function poolEntries() {
+        return allVocab().filter(function (w) {
+          if (ui.src !== "all" && w.src !== ui.src) return false;
+          if (!ui.reviewMode && ui.kind !== "all" && w.e.kind !== ui.kind) return false;
+          return true;
+        }).map(function (w) { return w.e; });
+      }
+      function shuffle(arr) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+      }
+
+      /* =========================================================
+         4) CÔNG CỤ CÂU HỎI
+         ========================================================= */
+      function pickGestures(n) {
+        // Tránh ghép "five" (lòng bàn tay) với "raised-back" (mu bàn tay)
+        // trong cùng một câu vì hai ký hiệu này rất khó phân biệt qua camera.
+        var pool = shuffle(GESTURES), picked = [];
+        for (var i = 0; i < pool.length && picked.length < n; i++) {
+          var g = pool[i];
+          if (g.id === "raised-back" && picked.some(function (p) { return p.id === "five"; })) continue;
+          if (g.id === "five" && picked.some(function (p) { return p.id === "raised-back"; })) continue;
+          picked.push(g);
+        }
+        return picked;
+      }
+      function nextQuestion() {
+        holdReset();
+        var entry = null;
+        if (ui.reviewMode) {
+          if (!ui.reviewQueue.length) { exitReviewMode(false); return; }
+          entry = ui.reviewQueue.shift();
+        }
+        var pool = poolEntries();
+        if (!entry) {
+          if (pool.length < 4) { current = null; renderQuestion(); return; }
+          var guard = 0;
+          do {
+            entry = pool[Math.floor(Math.random() * pool.length)];
+            guard++;
+          } while (current && entryKey(entry) === entryKey(current.entry) && pool.length > 4 && guard < 12);
+        }
+        var distractPool = pool.filter(function (e) { return entryKey(e) !== entryKey(entry); });
+        if (distractPool.length < 3) {
+          distractPool = allVocab().map(function (w) { return w.e; })
+            .filter(function (e) { return entryKey(e) !== entryKey(entry); });
+        }
+        var sameKind = distractPool.filter(function (e) { return e.kind === entry.kind; });
+        var ordered = shuffle(sameKind).concat(shuffle(distractPool.filter(function (e) { return e.kind !== entry.kind; })));
+        var seen = {}, distractors = [];
+        for (var i = 0; i < ordered.length && distractors.length < 3; i++) {
+          if (seen[ordered[i].meaning]) continue;
+          seen[ordered[i].meaning] = true;
+          distractors.push(ordered[i]);
+        }
+        if (distractors.length < 3) { current = null; renderQuestion(); return; }
+        var gestures = pickGestures(4);
+        var opts = shuffle([entry].concat(distractors)).map(function (e, idx) {
+          return { entry: e, gesture: gestures[idx] };
+        });
+        var correctIdx = -1;
+        opts.forEach(function (o, idx) { if (entryKey(o.entry) === entryKey(entry)) correctIdx = idx; });
+        session.qIndex++;
+        current = { entry: entry, options: opts, correctIdx: correctIdx, answered: false, pickedIdx: -1 };
+        renderQuestion();
+        updateScoreboard();
+      }
+      function updateScoreboard() {
+        $("scoreVal").textContent = session.score;
+        $("correctVal").textContent = session.correct + "/" + session.asked;
+        $("streakVal").textContent = session.streak;
+        $("qNumVal").textContent = session.asked === 0 && !current ? "–" : session.qIndex;
+      }
+      function renderQuestion() {
+        var card = $("qCard");
+        if (!current) {
+          var msg = ui.src === "user" && userVocab.length === 0
+            ? "Bạn chưa nhập từ nào. Sang tab Kho từ để dán danh sách, chọn file CSV/JSON hoặc thêm thủ công — từ đã nhập sẽ thành câu hỏi ngay."
+            : "Chưa đủ từ để tạo câu hỏi (cần ít nhất 4 mục khác nhau). Hãy thêm từ ở tab Kho từ.";
+          card.innerHTML = '<div class="empty-q"><span class="zh">空</span>' + esc(msg) + "</div>";
+          return;
+        }
+        var e = current.entry;
+        var longQ = e.hanzi.length > 6 ? " long" : "";
+        var letters = ["A", "B", "C", "D"];
+        var html = "";
+        html += '<div class="q-top"><span class="kind-chip">' + esc(KIND_LABEL[e.kind] || "Từ") + "</span>";
+        if (ui.reviewMode) html += '<span class="mode-chip">Đang ôn câu sai</span>';
+        html += '<span class="q-count">Câu ' + session.qIndex + "</span></div>";
+        html += '<div class="q-hanzi zh' + longQ + '">' + esc(e.hanzi) + "</div>";
+        if (e.pinyin) html += '<p class="q-pinyin">' + esc(e.pinyin) + "</p>";
+        html += '<p class="q-ask">Nghĩa đúng của ' + (e.kind === "sentence" ? "câu" : e.kind === "phrase" ? "cụm từ" : "từ") + ' này là gì? Giơ ký hiệu của phương án đó trước camera, hoặc chạm để chọn.</p>';
+        html += '<div class="options" id="optGrid">';
+        current.options.forEach(function (o, idx) {
+          var cls = "opt";
+          if (current.answered) {
+            if (idx === current.correctIdx) cls += " correct";
+            else if (idx === current.pickedIdx) cls += " wrong";
+          }
+          html += '<button class="' + cls + '" data-idx="' + idx + '"' + (current.answered ? " disabled" : "") + ">" +
+            '<span class="g-emoji">' + o.gesture.emoji + "</span>" +
+            '<span class="g-body"><span class="g-letter">' + letters[idx] + '</span>' +
+            '<span class="g-name">' + esc(o.gesture.nameVi) + "</span>" +
+            '<span class="g-meaning">' + esc(o.entry.meaning) + "</span></span></button>";
+        });
+        html += "</div>";
+        html += '<div class="feedback' + (current.answered ? " show" : "") + '" id="feedbackBox">';
+        if (current.answered) {
+          var ok = current.pickedIdx === current.correctIdx;
+          html += '<p class="verdict ' + (ok ? "ok" : "bad") + '">' + (ok ? "Đúng rồi! 答对了" : "Chưa đúng. 再试一次") + "</p>";
+          html += "<p><b class='zh'>" + esc(e.hanzi) + "</b>" + (e.pinyin ? " · " + esc(e.pinyin) : "") + " — " + esc(e.meaning) + "</p>";
+          if (e.example) html += '<p class="ex">Ví dụ: ' + esc(e.example) + "</p>";
+          var via = current.via === "gesture" ? "bằng ký hiệu tay" : current.via === "photo" ? "bằng ảnh chụp ký hiệu" : "bằng chạm chọn";
+          html += '<p class="note">Bạn đã trả lời ' + via + ": " + current.options[current.pickedIdx].gesture.emoji + " " + esc(current.options[current.pickedIdx].gesture.nameVi) + ".</p>";
+        }
+        html += "</div>";
+        html += '<div class="q-actions">';
+        if (current.answered) html += '<button class="btn primary" id="btnNextQ">Câu tiếp theo</button>';
+        else html += '<button class="btn" id="btnSkipQ">Bỏ qua câu này</button>';
+        if (ui.reviewMode) html += '<button class="btn" id="btnExitReview">Thoát ôn câu sai</button>';
+        html += "</div>";
+        card.innerHTML = html;
+        var grid = $("optGrid");
+        if (grid) {
+          var btns = grid.querySelectorAll(".opt");
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener("click", function () {
+              answerQuestion(parseInt(this.getAttribute("data-idx"), 10), "tap");
+            });
+          }
+        }
+        var nq = $("btnNextQ"); if (nq) nq.addEventListener("click", nextQuestion);
+        var sq = $("btnSkipQ"); if (sq) sq.addEventListener("click", nextQuestion);
+        var xr = $("btnExitReview"); if (xr) xr.addEventListener("click", function () { exitReviewMode(true); });
+      }
+      function answerQuestion(idx, via) {
+        if (!current || current.answered || idx < 0) return;
+        current.answered = true;
+        current.pickedIdx = idx;
+        current.via = via;
+        var ok = idx === current.correctIdx;
+        session.asked++;
+        var key = entryKey(current.entry);
+        if (!stats[key]) stats[key] = { entry: current.entry, attempts: 0, wrong: 0 };
+        stats[key].attempts++;
+        if (ok) {
+          session.correct++;
+          session.streak++;
+          session.score += 10 + Math.min(session.streak - 1, 5) * 2;
+        } else {
+          session.streak = 0;
+          stats[key].wrong++;
+        }
+        holdReset();
+        renderQuestion();
+        updateScoreboard();
+        renderReview();
+      }
+
+      /* =========================================================
+         5) CAMERA + MEDIAPIPE HANDS (bản classic qua CDN)
+         Xin quyền camera và hiện hình NGAY khi bấm nút; mô hình
+         nạp ở nền sau đó — lỗi nạp mô hình không tắt hình camera.
+         ========================================================= */
+      var MP_VERSION = "0.4.1675469240";
+      var MP_BASES = [
+        "https://cdn.jsdelivr.net/npm/@mediapipe/hands@" + MP_VERSION,
+        "https://unpkg.com/@mediapipe/hands@" + MP_VERSION
+      ];
+      var cam = {
+        stream: null, video: null, canvas: null, ctx: null,
+        hands: null, handsBase: null, modelState: "idle", // idle|loading|ready|failed
+        raf: 0, busy: false, lastHands: [], camOn: false, starting: false,
+        photoResolver: null
+      };
+      function setCamStatus(msg, isErr) {
+        var el = $("camStatus");
+        el.textContent = msg;
+        el.className = "cam-status" + (isErr ? " err" : "");
+      }
+      function loadScriptOnce(src) {
+        return new Promise(function (resolve, reject) {
+          var s = document.createElement("script");
+          s.src = src; s.async = true;
+          s.onload = function () { resolve(); };
+          s.onerror = function () { reject(new Error("Không tải được " + src)); };
+          document.head.appendChild(s);
+        });
+      }
+      function withTimeout(p, ms, what) {
+        return new Promise(function (resolve, reject) {
+          var t = setTimeout(function () { reject(new Error(what + " quá lâu (quá " + Math.round(ms / 1000) + " giây).")); }, ms);
+          p.then(function (v) { clearTimeout(t); resolve(v); }, function (e) { clearTimeout(t); reject(e); });
+        });
+      }
+      function ensureHands() {
+        if (cam.hands) return Promise.resolve(cam.hands);
+        if (cam.modelState === "loading" && cam._handsPromise) return cam._handsPromise;
+        cam.modelState = "loading";
+        $("btnModelRetry").classList.add("hidden");
+        cam._handsPromise = (async function () {
+          var errors = [];
+          for (var i = 0; i < MP_BASES.length; i++) {
+            var base = MP_BASES[i];
+            try {
+              if (typeof window.Hands === "undefined") {
+                setCamStatus("Đang tải thư viện nhận diện tay…");
+                await withTimeout(loadScriptOnce(base + "/hands.js"), 30000, "Tải thư viện nhận diện");
+              }
+              if (typeof window.Hands === "undefined") throw new Error("Thư viện không khởi tạo được.");
+              setCamStatus("Đang khởi tạo mô hình bàn tay…");
+              var h = new window.Hands({ locateFile: (function (b) { return function (f) { return b + "/" + f; }; })(base) });
+              h.setOptions({ maxNumHands: 2, modelComplexity: 1, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
+              h.onResults(onHandsResults);
+              cam.hands = h; cam.handsBase = base; cam.modelState = "ready";
+              if (cam.camOn) setCamStatus("Đã sẵn sàng — giơ ký hiệu của phương án bạn chọn và giữ yên 0,5 giây.");
+              return h;
+            } catch (err) {
+              errors.push(err && err.message ? err.message : String(err));
+              cam.hands = null;
+            }
+          }
+          cam.modelState = "failed";
+          $("btnModelRetry").classList.remove("hidden");
+          throw new Error("Không nạp được mô hình nhận diện tay (" + errors.join(" · ") + ")");
+        })();
+        cam._handsPromise.catch(function () { cam._handsPromise = null; });
+        return cam._handsPromise;
+      }
+      function onHandsResults(results) {
+        var raw = (results && results.multiHandLandmarks) || [];
+        var mirrored = mirrorHands(raw);
+        if (cam.photoResolver) {
+          var r = cam.photoResolver; cam.photoResolver = null;
+          r(mirrored);
+          return;
+        }
+        cam.lastHands = mirrored;
+        drawLandmarks(mirrored);
+        updateDetection(mirrored);
+      }
+      var HAND_LINKS = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[6,7],[7,8],[5,9],[9,10],[10,11],[11,12],[9,13],[13,14],[14,15],[15,16],[13,17],[17,18],[18,19],[19,20],[0,17]];
+      function drawLandmarks(hands) {
+        var ctx = cam.ctx, c = cam.canvas;
+        if (!ctx || !c) return;
+        ctx.clearRect(0, 0, c.width, c.height);
+        ctx.lineWidth = 2.5; ctx.strokeStyle = "rgba(192,57,43,0.85)"; ctx.fillStyle = "#f4eee1";
+        hands.forEach(function (h) {
+          ctx.beginPath();
+          HAND_LINKS.forEach(function (lk) {
+            ctx.moveTo(h[lk[0]].x * c.width, h[lk[0]].y * c.height);
+            ctx.lineTo(h[lk[1]].x * c.width, h[lk[1]].y * c.height);
+          });
+          ctx.stroke();
+          h.forEach(function (p) {
+            ctx.beginPath(); ctx.arc(p.x * c.width, p.y * c.height, 3.2, 0, Math.PI * 2); ctx.fill();
+          });
+        });
+      }
+      async function camLoop() {
+        if (!cam.camOn) return;
+        var v = cam.video;
+        if (cam.hands && v && v.readyState >= 2 && !cam.busy && !cam.photoResolver) {
+          cam.busy = true;
+          try { await cam.hands.send({ image: v }); } catch (e) { /* bỏ qua khung lỗi lẻ */ }
+          cam.busy = false;
+        }
+        cam.raf = requestAnimationFrame(camLoop);
+      }
+      function collectDiagnostics() {
+        var inIframe = false;
+        try { inIframe = window.self !== window.top; } catch (e) { inIframe = true; }
+        return {
+          protocol: window.location.protocol,
+          secure: window.isSecureContext === true,
+          inIframe: inIframe,
+          hasApi: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+        };
+      }
+      async function refreshDiag() {
+        var d = collectDiagnostics();
+        $("diagProtocol").textContent = d.protocol;
+        $("diagSecure").textContent = d.secure ? "Có" : "Không";
+        $("diagFrame").textContent = d.inIframe ? "Trong khung nhúng (iframe)" : "Trang độc lập";
+        $("diagApi").textContent = d.hasApi ? "Có (getUserMedia)" : "Không có";
+        var perm = "Không rõ";
+        try {
+          if (navigator.permissions && navigator.permissions.query) {
+            var st = await navigator.permissions.query({ name: "camera" });
+            perm = st.state === "granted" ? "Đã cấp" : st.state === "denied" ? "Đã bị chặn" : "Chưa cấp (sẽ hỏi khi bật)";
+          }
+        } catch (e) { /* Safari không hỗ trợ truy vấn này */ }
+        $("diagPerm").textContent = perm;
+        return d;
+      }
+      function unavailableMessage(d) {
+        var photoHint = " Bạn vẫn trả lời bằng ký hiệu tay được: dùng nút “Chụp ảnh ký hiệu tay” — chụp một tấm ảnh bàn tay, app nhận diện ký hiệu trong ảnh bằng cùng mô hình.";
+        if (d.protocol === "http:") return "Trình duyệt chỉ cho mở camera trên trang an toàn (https) — trang này đang chạy qua http nên camera trực tiếp bị chặn hẳn. Hãy mở lại app bằng địa chỉ https:// rồi thử lại." + photoHint;
+        if (!d.secure && d.inIframe) return "Camera trực tiếp đang bị chặn vì app đang chạy trong một khung nhúng (iframe) không được cấp quyền camera. Hãy mở app ở chế độ toàn trang / tab riêng rồi bấm Bật camera lại." + photoHint;
+        if (!d.secure) return "Trình duyệt không coi trang này là ngữ cảnh an toàn nên đã khóa camera. Hãy mở app qua địa chỉ https:// hoặc localhost rồi thử lại." + photoHint;
+        return "Trình duyệt/thiết bị này không cung cấp API camera. Hãy thử Chrome hoặc Safari bản mới nhất." + photoHint;
+      }
+      function cameraErrorMessage(err) {
+        var name = err && err.name ? err.name : "";
+        var raw = err && err.message ? err.message : "";
+        switch (name) {
+          case "NotAllowedError": case "SecurityError":
+            return "Quyền camera đang bị chặn. Hãy bấm biểu tượng camera/khóa trên thanh địa chỉ, cho phép camera cho trang này rồi bấm “Thử bật lại camera”. Nếu vẫn bị chặn trong khung nhúng, hãy mở app ở tab riêng — hoặc dùng nút “Chụp ảnh ký hiệu tay”.";
+          case "NotFoundError": case "OverconstrainedError":
+            return "Không tìm thấy camera trên thiết bị này. Hãy kiểm tra camera có đang kết nối không, hoặc trả lời bằng cách chạm vào phương án / chụp ảnh ký hiệu tay.";
+          case "NotReadableError": case "AbortError":
+            return "Camera đang bị một ứng dụng khác sử dụng (Zoom, Meet…). Hãy đóng ứng dụng đó rồi bấm “Thử bật lại camera”.";
+          default:
+            return "Không bật được camera" + (raw ? ": " + raw : "") + ". Hãy thử lại, dùng nút “Chụp ảnh ký hiệu tay”, hoặc trả lời bằng cách chạm vào phương án.";
+        }
+      }
+      async function startCamera() {
+        if (cam.starting || cam.camOn) return;
+        var d = await refreshDiag();
+        if (!d.hasApi) { setCamStatus(unavailableMessage(d), true); $("diagBox").open = true; return; }
+        cam.starting = true;
+        var btn = $("btnCamStart");
+        btn.disabled = true; btn.textContent = "Đang xin quyền camera…";
+        try {
+          var stream;
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 640 }, height: { ideal: 480 } }, audio: false });
+          } catch (e1) {
+            if (e1 && e1.name === "NotAllowedError") throw e1;
+            stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+          }
+          cam.stream = stream;
+          var v = cam.video;
+          v.srcObject = stream;
+          v.muted = true;
+          try { await v.play(); } catch (e2) { /* stream đã gắn, sẽ hiện khi tương tác */ }
+          cam.camOn = true;
+          $("camPlaceholder").classList.add("hidden");
+          btn.classList.add("hidden");
+          $("btnCamStop").classList.remove("hidden");
+          setCamStatus("Camera đã bật. Đang nạp mô hình nhận diện ở nền…");
+          cam.raf = requestAnimationFrame(camLoop);
+          ensureHands().then(function () {
+            if (cam.camOn) setCamStatus("Đã sẵn sàng — giơ ký hiệu của phương án bạn chọn và giữ yên 0,5 giây.");
+          }).catch(function (err) {
+            if (cam.camOn) setCamStatus("Camera vẫn xem được nhưng mô hình nhận diện chưa nạp được: " + err.message + " Bạn có thể bấm “Thử nạp lại mô hình”, hoặc trả lời bằng cách chạm vào phương án.", true);
+          });
+          refreshDiag();
+        } catch (err) {
+          setCamStatus(cameraErrorMessage(err), true);
+          btn.disabled = false; btn.textContent = "Thử bật lại camera";
+          if (cam.stream) { cam.stream.getTracks().forEach(function (t) { t.stop(); }); cam.stream = null; }
+        } finally {
+          cam.starting = false;
+        }
+      }
+      function stopCamera() {
+        cam.camOn = false;
+        cancelAnimationFrame(cam.raf);
+        if (cam.stream) { cam.stream.getTracks().forEach(function (t) { t.stop(); }); cam.stream = null; }
+        if (cam.video) cam.video.srcObject = null;
+        cam.lastHands = [];
+        if (cam.ctx) cam.ctx.clearRect(0, 0, cam.canvas.width, cam.canvas.height);
+        $("camPlaceholder").classList.remove("hidden");
+        $("btnCamStop").classList.add("hidden");
+        var btn = $("btnCamStart");
+        btn.classList.remove("hidden"); btn.disabled = false; btn.textContent = "Bật camera";
+        setCamStatus("Camera đã tắt — bạn vẫn trả lời được bằng cách chạm vào phương án, hoặc chụp ảnh ký hiệu tay.");
+        holdReset();
+        setDetect(null, 0);
+      }
+
+      /* ---------- Giữ ký hiệu 0,5 giây để chốt đáp án ---------- */
+      var HOLD_MS = 500;
+      var hold = { gestureId: null, since: 0 };
+      function holdReset() {
+        hold.gestureId = null; hold.since = 0;
+        $("holdFill").style.width = "0%";
+        markDetectedOption(null);
+      }
+      function markDetectedOption(gestureId) {
+        var grid = $("optGrid");
+        if (!grid) return;
+        var btns = grid.querySelectorAll(".opt");
+        for (var i = 0; i < btns.length; i++) btns[i].classList.remove("detected");
+        if (!gestureId || !current) return;
+        for (var j = 0; j < current.options.length; j++) {
+          if (current.options[j].gesture.id === gestureId) { btns[j].classList.add("detected"); break; }
+        }
+      }
+      function setDetect(g, score) {
+        if (!g) {
+          $("detectEmoji").textContent = "✋";
+          $("detectName").textContent = cam.lastHands.length ? "Đang nhìn tay bạn…" : "Chưa thấy ký hiệu nào";
+          $("detectSub").textContent = cam.lastHands.length ? "Hãy làm rõ một ký hiệu trong thư viện." : "Đưa tay vào khung hình, lòng bàn tay hướng về camera.";
+          return;
+        }
+        $("detectEmoji").textContent = g.emoji;
+        $("detectName").textContent = g.nameVi + " · " + g.nameZh;
+        $("detectSub").textContent = "Độ khớp " + Math.round(score * 100) + "%" + (score >= MATCH_THRESHOLD ? " — đang giữ để chốt…" : " — cần rõ hơn một chút (ngưỡng " + Math.round(MATCH_THRESHOLD * 100) + "%).");
+      }
+      function updateDetection(hands) {
+        if (!hands.length) {
+          cam.lastHands = [];
+          holdReset();
+          setDetect(null, 0);
+          return;
+        }
+        // Ký hiệu khớp nhất trong toàn thư viện (để hiển thị).
+        var bestAll = null, bestAllScore = 0;
+        GESTURES.forEach(function (g) {
+          var s = scoreGesture(g, hands);
+          if (s > bestAllScore) { bestAllScore = s; bestAll = g; }
+        });
+        setDetect(bestAllScore >= 0.45 ? bestAll : null, bestAllScore);
+        if (!current || current.answered) { holdReset(); return; }
+        // Chỉ 4 ký hiệu của câu hiện tại mới chốt được đáp án.
+        var cand = null, candScore = 0, candIdx = -1;
+        current.options.forEach(function (o, idx) {
+          var s = scoreGesture(o.gesture, hands);
+          if (s > candScore) { candScore = s; cand = o.gesture; candIdx = idx; }
+        });
+        var now = performance.now();
+        if (cand && candScore >= MATCH_THRESHOLD) {
+          if (hold.gestureId !== cand.id) { hold.gestureId = cand.id; hold.since = now; }
+          var pct = Math.min(100, ((now - hold.since) / HOLD_MS) * 100);
+          $("holdFill").style.width = pct + "%";
+          markDetectedOption(cand.id);
+          if (now - hold.since >= HOLD_MS) {
+            answerQuestion(candIdx, "gesture");
+          }
+        } else {
+          holdReset();
+        }
+      }
+
+      /* ---------- Chụp ảnh ký hiệu (dự phòng khi camera trực tiếp bị chặn) ---------- */
+      async function classifyPhotoFile(file) {
+        var statusEl = $("photoStatus");
+        var preview = $("photoPreview");
+        var url = URL.createObjectURL(file);
+        $("photoImg").src = url;
+        preview.classList.add("show");
+        statusEl.textContent = "Đang nạp mô hình và phân tích ảnh…";
+        statusEl.className = "cam-status";
+        try {
+          var handsMp = await ensureHands();
+          var img = await new Promise(function (resolve, reject) {
+            var el = new Image();
+            el.onload = function () { resolve(el); };
+            el.onerror = function () { reject(new Error("Không đọc được ảnh đã chọn.")); };
+            el.src = url;
+          });
+          var hands = await new Promise(function (resolve) {
+            cam.photoResolver = resolve;
+            handsMp.send({ image: img }).catch(function () {
+              if (cam.photoResolver === resolve) { cam.photoResolver = null; resolve([]); }
+            });
+            setTimeout(function () {
+              if (cam.photoResolver === resolve) { cam.photoResolver = null; resolve(cam.lastHands); }
+            }, 15000);
+          });
+          if (!hands.length) {
+            statusEl.textContent = "Không thấy bàn tay trong ảnh. Hãy chụp lại: tay chiếm phần lớn khung hình, đủ sáng, nền gọn.";
+            statusEl.className = "cam-status err";
+            return;
+          }
+          var bestAll = null, bestAllScore = 0;
+          GESTURES.forEach(function (g) {
+            var s = scoreGesture(g, hands);
+            if (s > bestAllScore) { bestAllScore = s; bestAll = g; }
+          });
+          if (!current || current.answered) {
+            statusEl.textContent = bestAllScore >= 0.45
+              ? "App nhìn thấy ký hiệu: " + bestAll.emoji + " " + bestAll.nameVi + " (khớp " + Math.round(bestAllScore * 100) + "%). Câu hiện tại đã trả lời xong — sang câu tiếp theo rồi chụp lại nhé."
+              : "Thấy bàn tay nhưng chưa nhận ra ký hiệu rõ ràng. Hãy làm ký hiệu dứt khoát hơn và chụp lại.";
+            return;
+          }
+          var candIdx = -1, candScore = 0, cand = null;
+          current.options.forEach(function (o, idx) {
+            var s = scoreGesture(o.gesture, hands);
+            if (s > candScore) { candScore = s; cand = o.gesture; candIdx = idx; }
+          });
+          if (cand && candScore >= MATCH_THRESHOLD) {
+            statusEl.textContent = "Nhận diện: " + cand.emoji + " " + cand.nameVi + " (khớp " + Math.round(candScore * 100) + "%) — đã chốt đáp án.";
+            answerQuestion(candIdx, "photo");
+          } else {
+            statusEl.textContent = "Ký hiệu trong ảnh chưa khớp rõ với 4 phương án của câu này" +
+              (bestAll ? " (gần nhất: " + bestAll.emoji + " " + bestAll.nameVi + ", " + Math.round(bestAllScore * 100) + "%)" : "") +
+              ". Hãy làm đúng ký hiệu của phương án bạn chọn và chụp lại.";
+            statusEl.className = "cam-status err";
+          }
+        } catch (err) {
+          statusEl.textContent = "Không phân tích được ảnh: " + (err && err.message ? err.message : String(err));
+          statusEl.className = "cam-status err";
+        }
+      }
+
+      /* =========================================================
+         6) KHO TỪ: hiển thị, thêm thủ công, xóa
+         ========================================================= */
+      function renderVocab() {
+        var q = ($("vocabSearch").value || "").trim().toLowerCase();
+        var list = $("vocabList");
+        var items = allVocab().filter(function (w) {
+          if (!q) return true;
+          var e = w.e;
+          return e.hanzi.toLowerCase().indexOf(q) >= 0 || e.pinyin.toLowerCase().indexOf(q) >= 0 || e.meaning.toLowerCase().indexOf(q) >= 0;
+        });
+        $("vocabSummary").textContent = "Tổng " + (BUILTIN_VOCAB.length + userVocab.length) + " mục (" + BUILTIN_VOCAB.length + " mẫu sẵn + " + userVocab.length + " bạn đã nhập).";
+        $("vocabBadge").textContent = BUILTIN_VOCAB.length + userVocab.length;
+        if (!items.length) {
+          list.innerHTML = '<p class="note">Không có mục nào khớp. ' + (userVocab.length === 0 ? "Hãy nhập thêm từ bằng khung bên trái." : "") + "</p>";
+          return;
+        }
+        list.innerHTML = items.map(function (w) {
+          var e = w.e;
+          return '<div class="v-item"><div class="v-body">' +
+            '<span class="v-hanzi zh">' + esc(e.hanzi) + "</span> " +
+            (e.pinyin ? '<span class="v-pinyin">' + esc(e.pinyin) + "</span>" : "") +
+            '<div class="v-meaning">' + esc(e.meaning) + "</div>" +
+            (e.example ? '<div class="v-ex zh">' + esc(e.example) + "</div>" : "") +
+            "</div>" +
+            '<span class="v-kind">' + esc(KIND_LABEL[e.kind] || "Từ") + "</span>" +
+            (w.src === "user"
+              ? '<span><span class="v-src">Đã nhập</span><br /><button class="v-del" data-del="' + esc(entryKey(e)) + '">Xóa</button></span>'
+              : '<span class="v-src">Kho mẫu</span>') +
+            "</div>";
+        }).join("");
+        var dels = list.querySelectorAll("[data-del]");
+        for (var i = 0; i < dels.length; i++) {
+          dels[i].addEventListener("click", function () {
+            var key = this.getAttribute("data-del");
+            userVocab = userVocab.filter(function (e) { return entryKey(e) !== key; });
+            renderVocab();
+          });
+        }
+      }
+
+      /* =========================================================
+         7) NHẬP TỪ BÊN NGOÀI: dán / CSV / JSON, có xem trước
+         ========================================================= */
+      var pendingImport = [];
+      function normalizeKind(v) {
+        var s = String(v || "").trim().toLowerCase();
+        if (s === "phrase" || s === "cum" || s === "cụm" || s === "cụm từ") return "phrase";
+        if (s === "sentence" || s === "cau" || s === "câu") return "sentence";
+        return "word";
+      }
+      function normalizeEntry(raw) {
+        if (!raw) return null;
+        var hanzi = String(raw.hanzi || raw.word || raw["từ"] || raw["han tu"] || raw.hantu || "").trim();
+        var meaning = String(raw.meaning || raw.nghia || raw["nghĩa"] || raw.vi || "").trim();
+        if (!hanzi || !meaning) return null;
+        return {
+          hanzi: hanzi,
+          pinyin: String(raw.pinyin || "").trim(),
+          meaning: meaning,
+          example: String(raw.example || raw.ex || raw["ví dụ"] || raw.vidu || "").trim(),
+          kind: normalizeKind(raw.kind || raw.type || raw.loai || raw["loại"])
+        };
+      }
+      function splitCsvLine(line, delim) {
+        var out = [], cur = "", inQ = false;
+        for (var i = 0; i < line.length; i++) {
+          var c = line[i];
+          if (inQ) {
+            if (c === '"') {
+              if (line[i + 1] === '"') { cur += '"'; i++; } else inQ = false;
+            } else cur += c;
+          } else if (c === '"') inQ = true;
+          else if (c === delim) { out.push(cur); cur = ""; }
+          else cur += c;
+        }
+        out.push(cur);
+        return out.map(function (s) { return s.trim(); });
+      }
+      function detectDelim(line) {
+        if (line.indexOf("|") >= 0) return "|";
+        if (line.indexOf("\t") >= 0) return "\t";
+        if (line.indexOf(";") >= 0) return ";";
+        return ",";
+      }
+      var HEADER_WORDS = { hanzi: 1, pinyin: 1, meaning: 1, example: 1, kind: 1, "từ": 1, "nghĩa": 1, "loại": 1, word: 1, type: 1 };
+      function parseDelimitedText(text) {
+        var entries = [], errors = [];
+        var lines = String(text || "").split(/\r?\n/);
+        lines.forEach(function (line, li) {
+          var raw = line.trim();
+          if (!raw) return;
+          var delim = detectDelim(raw);
+          var cells = splitCsvLine(raw, delim);
+          var first = (cells[0] || "").toLowerCase();
+          if (HEADER_WORDS[first] && cells.length >= 2) return; // dòng tiêu đề
+          if (cells.length < 2) { errors.push("Dòng " + (li + 1) + ": cần ít nhất Hán tự và nghĩa."); return; }
+          var e = normalizeEntry({ hanzi: cells[0], pinyin: cells[1] && cells.length >= 3 ? cells[1] : "", meaning: cells.length >= 3 ? cells[2] : cells[1], example: cells[3] || "", kind: cells[4] || "" });
+          // Trường hợp chỉ 2 cột: hanzi | nghĩa
+          if (cells.length === 2) e = normalizeEntry({ hanzi: cells[0], meaning: cells[1] });
+          if (!e) errors.push("Dòng " + (li + 1) + ": thiếu Hán tự hoặc nghĩa.");
+          else entries.push(e);
+        });
+        return { entries: entries, errors: errors };
+      }
+      function parseCsvText(text) { return parseDelimitedText(text); }
+      function parseJsonText(text) {
+        var data = JSON.parse(text);
+        if (!Array.isArray(data)) throw new Error("JSON phải là một mảng các đối tượng.");
+        var entries = [], errors = [];
+        data.forEach(function (raw, i) {
+          var e = normalizeEntry(raw);
+          if (!e) errors.push("Mục " + (i + 1) + ": thiếu hanzi hoặc meaning.");
+          else entries.push(e);
+        });
+        return { entries: entries, errors: errors };
+      }
+      function showImportPreview(result, sourceLabel) {
+        var box = $("importResult");
+        var existing = {};
+        allVocab().forEach(function (w) { existing[entryKey(w.e)] = true; });
+        var fresh = [], dupes = 0;
+        result.entries.forEach(function (e) {
+          if (existing[entryKey(e)]) { dupes++; return; }
+          existing[entryKey(e)] = true;
+          fresh.push(e);
+        });
+        pendingImport = fresh;
+        var html = "";
+        if (fresh.length) html += '<p class="ok-line">Đọc được ' + fresh.length + " mục mới từ " + esc(sourceLabel) + ". Kiểm tra rồi bấm “Thêm vào kho từ”.</p>";
+        else html += '<p class="err-line">Không có mục mới nào để thêm từ ' + esc(sourceLabel) + ".</p>";
+        if (dupes) html += "<p>" + dupes + " mục trùng với kho hiện có — sẽ bỏ qua.</p>";
+        if (result.errors.length) {
+          html += '<p class="err-line">' + result.errors.length + " dòng không đọc được:</p><ul>";
+          result.errors.slice(0, 12).forEach(function (er) { html += "<li>" + esc(er) + "</li>"; });
+          if (result.errors.length > 12) html += "<li>… và " + (result.errors.length - 12) + " dòng nữa.</li>";
+          html += "</ul>";
+        }
+        if (fresh.length) {
+          html += "<ul>";
+          fresh.slice(0, 8).forEach(function (e) {
+            html += '<li><b class="zh">' + esc(e.hanzi) + "</b>" + (e.pinyin ? " · " + esc(e.pinyin) : "") + " — " + esc(e.meaning) + "</li>";
+          });
+          if (fresh.length > 8) html += "<li>… và " + (fresh.length - 8) + " mục nữa.</li>";
+          html += "</ul>";
+        }
+        box.innerHTML = html;
+        box.classList.add("show");
+        $("importActions").classList.toggle("hidden", fresh.length === 0);
+        $("btnApplyImport").textContent = "Thêm " + fresh.length + " mục vào kho từ";
+      }
+      function clearImportPreview() {
+        pendingImport = [];
+        $("importResult").classList.remove("show");
+        $("importResult").innerHTML = "";
+        $("importActions").classList.add("hidden");
+      }
+      function readFileAsText(file) {
+        return new Promise(function (resolve, reject) {
+          var r = new FileReader();
+          r.onload = function () { resolve(String(r.result || "")); };
+          r.onerror = function () { reject(new Error("Không đọc được file.")); };
+          r.readAsText(file, "UTF-8");
+        });
+      }
+
+      /* =========================================================
+         8) XUẤT KHO TỪ ĐÃ NHẬP
+         ========================================================= */
+      function downloadFile(name, content, mime) {
+        var blob = new Blob([content], { type: mime });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url; a.download = name;
+        document.body.appendChild(a); a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      }
+      function csvCell(s) {
+        s = String(s == null ? "" : s);
+        return /[",\n;]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+      }
+      function exportUserVocab(format) {
+        if (!userVocab.length) {
+          $("importResult").innerHTML = '<p class="err-line">Bạn chưa nhập từ nào trong phiên này — chưa có gì để xuất.</p>';
+          $("importResult").classList.add("show");
+          $("importActions").classList.add("hidden");
+          return;
+        }
+        if (format === "json") {
+          downloadFile("kho-tu-vung.json", JSON.stringify(userVocab, null, 2), "application/json;charset=utf-8");
+        } else {
+          var rows = ["hanzi,pinyin,meaning,example,kind"];
+          userVocab.forEach(function (e) {
+            rows.push([e.hanzi, e.pinyin, e.meaning, e.example, e.kind].map(csvCell).join(","));
+          });
+          downloadFile("kho-tu-vung.csv", "﻿" + rows.join("\n"), "text/csv;charset=utf-8");
+        }
+      }
+
+      /* =========================================================
+         9) ÔN TẬP CÂU SAI
+         ========================================================= */
+      function wrongEntries() {
+        return Object.keys(stats).filter(function (k) { return stats[k].wrong > 0; })
+          .map(function (k) { return stats[k]; })
+          .sort(function (a, b) { return b.wrong - a.wrong; });
+      }
+      function renderReview() {
+        var wrong = wrongEntries();
+        var totalAttempts = 0;
+        Object.keys(stats).forEach(function (k) { totalAttempts += stats[k].attempts; });
+        var badge = $("reviewBadge");
+        badge.textContent = wrong.length;
+        badge.classList.toggle("hidden", wrong.length === 0);
+        $("btnPracticeWrong").disabled = wrong.length === 0;
+        var s = $("reviewSummary");
+        if (totalAttempts === 0) {
+          s.textContent = "Bạn chưa trả lời câu nào trong phiên này. Sang tab Luyện tập trả lời vài câu — các mục trả lời sai sẽ tự gom về đây.";
+        } else {
+          s.textContent = "Phiên này: " + session.correct + "/" + session.asked + " câu đúng, " + Object.keys(stats).length + " mục đã gặp, " + wrong.length + " mục từng sai cần ôn.";
+        }
+        var list = $("reviewList");
+        if (!wrong.length) { list.innerHTML = ""; return; }
+        list.innerHTML = wrong.map(function (st) {
+          var e = st.entry;
+          return '<div class="review-item"><div class="r-body">' +
+            '<span class="r-hanzi zh">' + esc(e.hanzi) + "</span> " +
+            (e.pinyin ? '<span class="v-pinyin">' + esc(e.pinyin) + "</span>" : "") +
+            '<div class="r-meaning">' + esc(e.meaning) + " · đã trả lời " + st.attempts + " lần</div></div>" +
+            '<span class="r-count">Sai ' + st.wrong + " lần</span></div>";
+        }).join("");
+      }
+      function enterReviewMode() {
+        var wrong = wrongEntries();
+        if (!wrong.length) return;
+        ui.reviewMode = true;
+        ui.reviewQueue = shuffle(wrong.map(function (st) { return st.entry; }));
+        switchTab("practice");
+        nextQuestion();
+      }
+      function exitReviewMode(rerender) {
+        ui.reviewMode = false;
+        ui.reviewQueue = [];
+        if (rerender) nextQuestion();
+      }
+
+      /* =========================================================
+         10) THƯ VIỆN KÝ HIỆU
+         ========================================================= */
+      function renderSigns() {
+        $("signsGrid").innerHTML = GESTURES.map(function (g) {
+          return '<div class="card sign-card"><span class="s-emoji">' + g.emoji + '</span><div>' +
+            '<div class="s-name">' + esc(g.nameVi) + '</div>' +
+            '<div class="s-zh zh">' + esc(g.nameZh) + "</div>" +
+            '<div class="s-hint">' + esc(g.hint) + "</div>" +
+            '<span class="s-hands">' + (g.hands === 2 ? "Hai tay" : "Một tay") + "</span></div></div>";
+        }).join("");
+      }
+
+      /* =========================================================
+         11) TABS + SỰ KIỆN + KHỞI TẠO
+         ========================================================= */
+      function switchTab(name) {
+        var btns = document.querySelectorAll(".tab-btn");
+        for (var i = 0; i < btns.length; i++) btns[i].classList.toggle("active", btns[i].getAttribute("data-tab") === name);
+        var panels = document.querySelectorAll(".tab-panel");
+        for (var j = 0; j < panels.length; j++) panels[j].classList.toggle("active", panels[j].id === "panel-" + name);
+        if (name === "review") renderReview();
+        if (name === "vocab") renderVocab();
+      }
+      function init() {
+        cam.video = $("camVideo");
+        cam.canvas = $("camCanvas");
+        cam.ctx = cam.canvas.getContext("2d");
+
+        var tabBtns = document.querySelectorAll(".tab-btn");
+        for (var i = 0; i < tabBtns.length; i++) {
+          tabBtns[i].addEventListener("click", function () { switchTab(this.getAttribute("data-tab")); });
+        }
+        $("kindSeg").addEventListener("click", function (ev) {
+          var b = ev.target.closest("button"); if (!b) return;
+          var bs = this.querySelectorAll("button");
+          for (var i = 0; i < bs.length; i++) bs[i].classList.toggle("active", bs[i] === b);
+          ui.kind = b.getAttribute("data-kind");
+          if (ui.reviewMode) exitReviewMode(false);
+          nextQuestion();
+        });
+        $("srcSeg").addEventListener("click", function (ev) {
+          var b = ev.target.closest("button"); if (!b) return;
+          var bs = this.querySelectorAll("button");
+          for (var i = 0; i < bs.length; i++) bs[i].classList.toggle("active", bs[i] === b);
+          ui.src = b.getAttribute("data-src");
+          if (ui.reviewMode) exitReviewMode(false);
+          nextQuestion();
+        });
+
+        $("btnCamStart").addEventListener("click", startCamera);
+        $("btnCamStop").addEventListener("click", stopCamera);
+        $("btnModelRetry").addEventListener("click", function () {
+          cam.modelState = "idle"; cam.hands = null; cam._handsPromise = null;
+          ensureHands().then(function () {
+            setCamStatus(cam.camOn ? "Mô hình đã sẵn sàng — giơ ký hiệu và giữ yên 0,5 giây." : "Mô hình nhận diện đã sẵn sàng.");
+          }).catch(function (err) { setCamStatus(err.message, true); });
+        });
+        $("photoInput").addEventListener("change", function () {
+          if (this.files && this.files[0]) classifyPhotoFile(this.files[0]);
+          this.value = "";
+        });
+
+        $("vocabSearch").addEventListener("input", renderVocab);
+        $("btnParsePaste").addEventListener("click", function () {
+          var text = $("pasteInput").value;
+          if (!text.trim()) {
+            $("importResult").innerHTML = '<p class="err-line">Ô dán đang trống — hãy dán danh sách từ vào trước.</p>';
+            $("importResult").classList.add("show");
+            $("importActions").classList.add("hidden");
+            return;
+          }
+          showImportPreview(parseDelimitedText(text), "danh sách đã dán");
+        });
+        $("csvInput").addEventListener("change", async function () {
+          if (!this.files || !this.files[0]) return;
+          var f = this.files[0]; this.value = "";
+          try { showImportPreview(parseCsvText(await readFileAsText(f)), "file " + f.name); }
+          catch (err) {
+            $("importResult").innerHTML = '<p class="err-line">Không đọc được file CSV: ' + esc(err.message) + "</p>";
+            $("importResult").classList.add("show"); $("importActions").classList.add("hidden");
+          }
+        });
+        $("jsonInput").addEventListener("change", async function () {
+          if (!this.files || !this.files[0]) return;
+          var f = this.files[0]; this.value = "";
+          try { showImportPreview(parseJsonText(await readFileAsText(f)), "file " + f.name); }
+          catch (err) {
+            $("importResult").innerHTML = '<p class="err-line">Không đọc được file JSON: ' + esc(err.message) + "</p>";
+            $("importResult").classList.add("show"); $("importActions").classList.add("hidden");
+          }
+        });
+        $("btnApplyImport").addEventListener("click", function () {
+          if (!pendingImport.length) return;
+          userVocab = userVocab.concat(pendingImport);
+          var n = pendingImport.length;
+          clearImportPreview();
+          $("importResult").innerHTML = '<p class="ok-line">Đã thêm ' + n + " mục vào kho từ. Chúng đã sẵn sàng làm câu hỏi ở tab Luyện tập (chọn nguồn “Từ đã nhập” hoặc “Tất cả”).</p>";
+          $("importResult").classList.add("show");
+          renderVocab();
+        });
+        $("btnCancelImport").addEventListener("click", clearImportPreview);
+        $("btnExportJson").addEventListener("click", function () { exportUserVocab("json"); });
+        $("btnExportCsv").addEventListener("click", function () { exportUserVocab("csv"); });
+        $("btnClearUser").addEventListener("click", function () {
+          if (!userVocab.length) return;
+          userVocab = [];
+          clearImportPreview();
+          renderVocab();
+        });
+        $("btnAddManual").addEventListener("click", function () {
+          var e = normalizeEntry({
+            hanzi: $("fHanzi").value, pinyin: $("fPinyin").value,
+            meaning: $("fMeaning").value, example: $("fExample").value, kind: $("fKind").value
+          });
+          var msg = $("manualMsg");
+          if (!e) { msg.textContent = "Cần nhập ít nhất Hán tự và nghĩa tiếng Việt."; msg.classList.remove("hidden"); return; }
+          var dup = allVocab().some(function (w) { return entryKey(w.e) === entryKey(e); });
+          if (dup) { msg.textContent = "Mục này đã có trong kho (trùng Hán tự + nghĩa)."; msg.classList.remove("hidden"); return; }
+          msg.classList.add("hidden");
+          userVocab.push(e);
+          $("fHanzi").value = ""; $("fPinyin").value = ""; $("fMeaning").value = ""; $("fExample").value = "";
+          renderVocab();
+        });
+
+        $("btnPracticeWrong").addEventListener("click", enterReviewMode);
+        $("btnResetStats").addEventListener("click", function () {
+          stats = {};
+          session = { score: 0, asked: 0, correct: 0, streak: 0, qIndex: session.qIndex };
+          if (ui.reviewMode) exitReviewMode(false);
+          current = null;
+          updateScoreboard();
+          renderReview();
+          nextQuestion();
+        });
+
+        renderSigns();
+        renderVocab();
+        renderReview();
+        refreshDiag();
+        nextQuestion();
+        updateScoreboard();
+      }
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+      else init();
+    </script>
+  </body>
+</html>
